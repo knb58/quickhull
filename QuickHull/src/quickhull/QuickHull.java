@@ -66,27 +66,10 @@ public class QuickHull extends JFrame {
                 coords2D coords = new coords2D(file, graph, FRAME_WIDTH, FRAME_HEIGHT);
                 String userCoords = coords.getCoordinates();
 
-                //Create a text field to show coordinates & scroll bar to show all of them
-                JTextField coordinates = new JTextField();
-                coordinates.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
-                coordinates.setText(userCoords);
-                coordinates.setEditable(false);
-                JScrollPane co = new JScrollPane(coordinates);
-                co.setPreferredSize(new Dimension(FRAME_HEIGHT, 50));
+               bonusPanel bonus= new bonusPanel(userCoords, FRAME_HEIGHT);
 
-//                JButton showCoords = new JButton("Show Coordinates");
-//                JLabel showStep = new JLabel("Show Step: ");
-//                JTextField stepNo = new JTextField(5);
-//
-//                //add to panel
-//                JPanel show = new JPanel();
-//                show.add(showCoords);
-//                show.add(showStep);
-//                show.add(stepNo);
-
-                //frame.add(co, BorderLayout.NORTH);
                 frame.add(coords);
-               // frame.add(show, BorderLayout.SOUTH);
+               // frame.add(bonus, BorderLayout.SOUTH);
                 frame.setVisible(true);
 
             }

@@ -54,6 +54,7 @@ public class coords2D extends JComponent {
          double size=  graphSize;
          int point=5;
          
+         //Create Graph
 //         graph= new Rectangle2D.Double(0, 0, frameX+buffer/2, frameY+buffer);
 //         g2.setStroke(new BasicStroke(2));
 //         g2.setColor(Color.LIGHT_GRAY);
