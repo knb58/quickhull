@@ -99,13 +99,16 @@ public class coords2D extends JComponent {
             for(int i=1; i<convexHull.size(); i++){
                 Point temp2= convexHull.get(i);
                 
-                
-                cHull= new Line2D.Double(temp.getX()*xMod+pMod+lMod, (-temp.getY()+size)*yMod+lMod, temp2.getX()*xMod+pMod+lMod, (-temp2.getY()+size)*yMod+lMod);
+                cHull= new Line2D.Double(
+                        temp.getX()*xMod+pMod+lMod, (-temp.getY()+size)*yMod+lMod, 
+                        temp2.getX()*xMod+pMod+lMod, (-temp2.getY()+size)*yMod+lMod);
                 g2.draw(cHull);
                 temp=temp2;
                 
             }
-            cHull= new Line2D.Double(start.getX()*xMod+pMod+lMod, (-start.getY()+size)*yMod+lMod ,temp.getX()*xMod+pMod+lMod ,(-temp.getY()+size)*yMod+lMod);
+            cHull= new Line2D.Double(
+                    start.getX()*xMod+pMod+lMod, (-start.getY()+size)*yMod+lMod ,
+                    temp.getX()*xMod+pMod+lMod ,(-temp.getY()+size)*yMod+lMod);
             g2.draw(cHull);
             
             
