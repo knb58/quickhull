@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class SortingClass {
    
-        public ArrayList<Point> quickHull(ArrayList<Point> points)
-    {
+    public ArrayList<Point> quickHull(ArrayList<Point> points) {
         ArrayList<Point> convexHull = new ArrayList<>();
         if (points.size() < 3)
             return (ArrayList) points.clone();
@@ -48,7 +47,11 @@ public class SortingClass {
         }
         hullSet(A, B, rightSet, convexHull);
         hullSet(B, A, leftSet, convexHull);
- 
+        
+        for(int i=0; i<convexHull.size(); i++){
+            System.out.println(convexHull);
+        }
+        
         return convexHull;
     }
  
@@ -62,9 +65,7 @@ public class SortingClass {
         return num;
     }
  
-    public void hullSet(Point A, Point B, ArrayList<Point> set,
-            ArrayList<Point> hull)
-    {
+    public void hullSet(Point A, Point B, ArrayList<Point> set,  ArrayList<Point> hull)  {
         int insertPosition = hull.indexOf(B);
         if (set.isEmpty())
             return;
