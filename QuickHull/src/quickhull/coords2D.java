@@ -39,7 +39,7 @@ public class coords2D extends JComponent {
         while (fileScanner.hasNext()){
                 xLoc=fileScanner.nextInt();
                 yLoc=fileScanner.nextInt();
-                coords[xLoc][yLoc] = true;
+               // coords[xLoc][yLoc] = true;
                 coords2.add(new Point(xLoc, yLoc));
                 coordinates+="("+ xLoc +","+ yLoc + ") "; 
              //   System.out.println(coords2);
@@ -84,6 +84,7 @@ public class coords2D extends JComponent {
   
                 graphPoints= new Ellipse2D.Double(tempX*(frameX/size)+2*point, (-tempY+size)*(frameY/size), point, point);
                 g2.setColor(Color.BLACK);
+                g2.setStroke(new BasicStroke(2));
                 g2.fill(graphPoints);
             }
            
