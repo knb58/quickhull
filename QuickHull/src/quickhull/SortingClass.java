@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 
 public class SortingClass {
-   
+    private ArrayList<Point> middle = new ArrayList<>();
+    private ArrayList<Point> convexHull = new ArrayList<>();
+    
     public ArrayList<Point> quickHull(ArrayList<Point> points) {
-        ArrayList<Point> convexHull = new ArrayList<>();
+        
         if (points.size() < 3)
             return (ArrayList) points.clone();
  
@@ -31,6 +33,8 @@ public class SortingClass {
         Point B = points.get(maxPoint);
         convexHull.add(A);
         convexHull.add(B);
+        middle.add(A);
+        middle.add(B);
         points.remove(A);
         points.remove(B);
  
@@ -48,10 +52,17 @@ public class SortingClass {
         hullSet(A, B, rightSet, convexHull);
         hullSet(B, A, leftSet, convexHull);
         
-        for(int i=0; i<convexHull.size(); i++){
-            System.out.println(convexHull);
-        }
         
+         System.out.println(convexHull);
+        
+        
+        return convexHull;
+    }
+    
+    public ArrayList<Point> getMiddle(){
+        return middle;
+    }
+    public ArrayList<Point> getHull(){
         return convexHull;
     }
  
