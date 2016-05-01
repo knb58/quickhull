@@ -25,11 +25,11 @@ public class QuickHull extends JFrame {
 
         //create file input area
         JLabel dir = new JLabel("Please input the path of the text file.");
-        JTextField fileField = new JTextField(20);
+        final JTextField fileField = new JTextField(20);
         dir.setAlignmentX(CENTER_ALIGNMENT);
         
         //create graph size area
-        JTextField size = new JTextField(4);
+        final JTextField size = new JTextField(4);
         size.setText("50");
         size.setAlignmentX(CENTER_ALIGNMENT);
         

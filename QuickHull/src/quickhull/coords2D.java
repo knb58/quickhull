@@ -33,7 +33,7 @@ public class coords2D extends JComponent {
         coords = new boolean[graphSize][graphSize];
         Scanner fileScanner = null;
         try {
-            fileScanner = new Scanner(new File("C:\\Users\\dell\\Documents\\test.txt"));
+            fileScanner = new Scanner(new File("/Users/Cam/Desktop/Algorithms/Project 4/quickhull/test2.txt"));
         } catch (FileNotFoundException ex) { System.exit(0);}
 
         while (fileScanner.hasNext()) {
