@@ -16,6 +16,7 @@ public class SortingClass {
         int minPoint = -1, maxPoint = -1;
         int minX = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
+        //Get the min and max X values
         for (int i = 0; i < points.size(); i++)
         {
             if (points.get(i).x < minX)
@@ -29,6 +30,8 @@ public class SortingClass {
                 maxPoint = i;
             }
         }
+        
+        //Add these values to the convex hull
         Point A = points.get(minPoint);
         Point B = points.get(maxPoint);
         convexHull.add(A);
@@ -40,7 +43,8 @@ public class SortingClass {
  
         ArrayList<Point> leftSet = new ArrayList<>();
         ArrayList<Point> rightSet = new ArrayList<>();
- 
+        
+        //Populate the left and right subsets
         for (int i = 0; i < points.size(); i++)
         {
             Point p = points.get(i);
@@ -49,11 +53,11 @@ public class SortingClass {
             else if (pointLocation(A, B, p) == 1)
                 rightSet.add(p);
         }
+        //Begin Recursive calls on subsets
         hullSet(A, B, rightSet, convexHull);
         hullSet(B, A, leftSet, convexHull);
         
         
-         System.out.println(convexHull);
         
         
         return convexHull;
@@ -78,6 +82,8 @@ public class SortingClass {
  
     public void hullSet(Point A, Point B, ArrayList<Point> set,  ArrayList<Point> hull)  {
         int insertPosition = hull.indexOf(B);
+        
+        //base cases
         if (set.isEmpty())
             return;
         if (set.size() == 1)
@@ -89,6 +95,8 @@ public class SortingClass {
         }
         int dist = Integer.MIN_VALUE;
         int furthestPoint = -1;
+        
+        //find the furthest point from the line
         for (int i = 0; i < set.size(); i++)
         {
             Point p = set.get(i);
@@ -124,6 +132,7 @@ public class SortingClass {
                 leftSetPB.add(M);
             }
         }
+        //recursive call
         hullSet(A, P, leftSetAP, hull);
         hullSet(P, B, leftSetPB, hull);
  
