@@ -44,7 +44,7 @@ public class coords2D extends JComponent {
                 coordinates+="("+ xLoc +","+ yLoc + ") "; 
              //   System.out.println(coords2);
         }
-       //  System.out.println(coordinates);
+//         System.out.println(coordinates);
     }
     
     public String getCoordinates(){
@@ -57,30 +57,14 @@ public class coords2D extends JComponent {
          Graphics2D g2 = (Graphics2D) g;
          Rectangle2D graph;
          Ellipse2D graphPoints;
-         double size=  graphSize;
+         final double size=  graphSize;
          int point=5;
          
-         //Create Graph
-//         graph= new Rectangle2D.Double(0, 0, frameX+buffer/2, frameY+buffer);
-//         g2.setStroke(new BasicStroke(2));
-//         g2.setColor(Color.LIGHT_GRAY);
-//         g2.draw(graph);
-//         
-//         Line2D xLine, yLine;
-//         for (int i=0; i<frameX+buffer/2; i+=1*point){
-//             g2.setStroke(new BasicStroke(1));
-//             xLine= new Line2D.Double(i, 0, i, frameY+buffer);
-//             for (int j=0; j<frameY+buffer; j+=1*point){
-//                yLine= new Line2D.Double(0, j ,frameX+buffer/2, j);
-//                g2.draw(yLine);
-//             }
-//             g2.draw(xLine);
-//         }
          
             for(int i=0; i<coords2.size(); i++){
                 Point temp= coords2.get(i);
-                double tempX= temp.getX();
-                double tempY=temp.getY();
+                final double tempX= temp.getX();
+                final double tempY=temp.getY();
   
                 graphPoints= new Ellipse2D.Double(tempX*(frameX/size)+2*point, (-tempY+size)*(frameY/size), point, point);
                 g2.setColor(Color.BLACK);
@@ -94,8 +78,8 @@ public class coords2D extends JComponent {
             Point start= convexHull.get(0);
             Point temp= start;
              Line2D cHull;
-            double xMod= (frameX/size), yMod= frameY/size;
-            double pMod=2*point, lMod=point/2;
+            final double xMod= (frameX/size), yMod= frameY/size;
+            final double pMod=2*point, lMod=point/2;
             
             for(int i=1; i<convexHull.size(); i++){
                 Point temp2= convexHull.get(i);
@@ -111,15 +95,7 @@ public class coords2D extends JComponent {
                     start.getX()*xMod+pMod+lMod, (-start.getY()+size)*yMod+lMod ,
                     temp.getX()*xMod+pMod+lMod ,(-temp.getY()+size)*yMod+lMod);
             g2.draw(cHull);
-            
-            
-//          for (int i=0; i<coords.length;  i++)
-//            for (int j=0; j<coords.length; j++) 
-//                if(coords[i][j]){
-//                    graphPoints= new Ellipse2D.Double(i*(frameX/size)+2*point, (-j+size)*(frameY/size),point,point);
-//                    g2.setColor(Color.BLACK);
-//                    g2.fill(graphPoints);
-//                }
+
     }
     
     

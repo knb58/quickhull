@@ -48,9 +48,8 @@ public class SortingClass {
         hullSet(A, B, rightSet, convexHull);
         hullSet(B, A, leftSet, convexHull);
         
-        for(int i=0; i<convexHull.size(); i++){
-            System.out.println(convexHull);
-        }
+
+        System.out.println(convexHull);
         
         return convexHull;
     }
