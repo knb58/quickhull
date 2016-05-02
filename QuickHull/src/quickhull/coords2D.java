@@ -18,7 +18,7 @@ public class coords2D extends JComponent {
 
     private boolean coords[][];
     ArrayList<Point> coords2 = new ArrayList<>();
-    ArrayList<Point> convexHull;
+    ArrayList<Point> convexHull, middle;
     private final int graphSize, buffer = 20;
     private double frameX, frameY;
     private String coordinates = "";
@@ -47,6 +47,7 @@ public class coords2D extends JComponent {
         //  System.out.println(coordinates);
         SortingClass hull = new SortingClass();
         convexHull = hull.quickHull(coords2);
+        middle= hull.getMiddle();
         
     }
 
@@ -100,17 +101,17 @@ public class coords2D extends JComponent {
                 temp.getX() * xMod + pMod + lMod, (-temp.getY() + graphSize) * yMod + lMod);
         g2.draw(cHull);
 
-//            ArrayList<Point> middle= hull.getMiddle();
-//            for( int i=0; i<middle.size(); i+=2){
-//                Point mid1= middle.get(i);
-//                Point mid2= middle.get(i+1);
-//                cHull= new Line2D.Double(
-//                    mid1.getX()*xMod+pMod+lMod, (-mid1.getY()+size)*yMod+lMod ,
-//                    mid2.getX()*xMod+pMod+lMod ,(-mid2.getY()+size)*yMod+lMod);
-//                g2.setColor(Color.LIGHT_GRAY);
-//                g2.setStroke(new BasicStroke(1));
-//            g2.draw(cHull);
-//            }
+            
+            for( int i=0; i<middle.size(); i+=2){
+                Point mid1= middle.get(i);
+                Point mid2= middle.get(i+1);
+                cHull= new Line2D.Double(
+                    mid1.getX()*xMod+pMod+lMod, (-mid1.getY()+graphSize)*yMod+lMod ,
+                    mid2.getX()*xMod+pMod+lMod ,(-mid2.getY()+graphSize)*yMod+lMod);
+                g2.setColor(Color.LIGHT_GRAY);
+                g2.setStroke(new BasicStroke(1));
+            g2.draw(cHull);
+            }
     }
 
 }
