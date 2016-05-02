@@ -74,70 +74,75 @@ public class coords2D extends JComponent {
 
        
 
-//        //draw line from largest to smallest x
-//        Point mid1 = middle.get(0);
-//        Point mid2 = middle.get(1);
-//        cHull = new Line2D.Double(
-//                mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-//                mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-//        g2.setColor(Color.DARK_GRAY);
-//        g2.setStroke(new BasicStroke(1));
-//        g2.draw(cHull);
-//
-//        Point tempP = middle.get(2);
+        //draw line from largest to smallest x
+        Point mid1 = middle.get(0);
+        Point mid2 = middle.get(1);
+        cHull = new Line2D.Double(
+                mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+                mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+        g2.setColor(Color.DARK_GRAY);
+        g2.setStroke(new BasicStroke(1));
+        g2.draw(cHull);
 
-//        //point inside lines
-//        for (int i = 2; i < middle.size(); i++) {
-//            mid1 = middle.get(0);
-//            mid2 = middle.get(1);
-//            
-//            Point mid3 = middle.get(i);
-//
-//            if (mid3.getX() != -1) {
-//                
-//                if (temp != mid3) {
-//                    if (mid3.getX() < tempP.getX()) {
-//                        mid2 = tempP;
-//                    } 
-//                    else {
-//                        mid1 = tempP;
-//                    }
-//                }
-//                
-//                //get slope of the lines
-//                double slope = ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
-//                //find the y intercept of the left point
-//                double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
-//                //find the y intercept of the intersecting point
-//                double PyIntercept = mid3.getY() - (mid3.getX() * (-1/slope));
-//                //derive the x and y values
-//                double xVal = (PyIntercept - mid1yIntercept) / (slope+1/slope);
-//                double yVal = (slope * xVal) + mid1yIntercept;
-//               
-//                //draw perpendicular line
-//                cHull = new Line2D.Double(
-//                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
-//                        xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
-//                g2.draw(cHull);
-//
-//                //draw from left point
-//                cHull = new Line2D.Double(
-//                        mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-//                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
-//                g2.draw(cHull);
-//
-//                //draw from right point
-//                cHull = new Line2D.Double(
-//                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
-//                        mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-//                g2.draw(cHull);
-//
-//                tempP = mid3;
-//            }
-//            else{
-//                tempP=middle.get(i+1);  
-//            }
-//        }
+        Point tempP = middle.get(2);
+
+        //point inside lines
+        for (int i = 2; i < middle.size(); i++) {
+            mid1 = middle.get(0);
+            mid2 = middle.get(1);
+            
+            Point mid3 = middle.get(i);
+
+            if (mid3.getX() != -1) {
+                
+                if (temp != mid3) {
+                    if (mid3.getX() < tempP.getX()) {
+                        mid2 = tempP;
+                    } 
+                    else {
+                        mid1 = tempP;
+                    }
+                }
+                
+                //get slope of the lines
+                double slope = ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
+                //find the y intercept of the left point
+                double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
+                //find the y intercept of the intersecting point
+                double PyIntercept = mid3.getY() - (mid3.getX() * (-1/slope));
+                //derive the x and y values
+                double xVal = (PyIntercept - mid1yIntercept) / (slope+1/slope);
+                double yVal = (slope * xVal) + mid1yIntercept;
+               
+                //draw perpendicular line
+                cHull = new Line2D.Double(
+                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                        xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
+                g2.draw(cHull);
+                
+                cHull = new Line2D.Double(
+                mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+                mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                g2.draw(cHull);
+
+                //draw from left point
+                cHull = new Line2D.Double(
+                        mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
+                g2.draw(cHull);
+
+                //draw from right point
+                cHull = new Line2D.Double(
+                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                        mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                g2.draw(cHull);
+
+                tempP = mid3;
+            }
+            else{
+                tempP=middle.get(i+1);  
+            }
+        }
          for (int i = 1; i < convexHull.size(); i++) {
             Point temp2 = convexHull.get(i);
 
