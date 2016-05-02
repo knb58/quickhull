@@ -1,20 +1,22 @@
 package quickhull;
 
-import java.awt.Point;
+
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class SortingClass {
-    private ArrayList<Point> middle = new ArrayList<>();
-    private ArrayList<Point> convexHull = new ArrayList<>();
     
-    public ArrayList<Point> quickHull(ArrayList<Point> points) {
+     ArrayList<Point2D.Double> middle = new ArrayList<>();
+     ArrayList<Point2D.Double> convexHull = new ArrayList<>();
+    
+    public ArrayList<Point2D.Double> quickHull(ArrayList<Point2D.Double> points) {
         
         if (points.size() < 3)
             return (ArrayList) points.clone();
  
         int minPoint = -1, maxPoint = -1;
-        int minX = Integer.MAX_VALUE;
-        int maxX = Integer.MIN_VALUE;
+        double minX = Integer.MAX_VALUE;
+        double maxX = Integer.MIN_VALUE;
         //Get the min and max X values
         for (int i = 0; i < points.size(); i++) {
             if (points.get(i).x < minX) {
@@ -28,8 +30,8 @@ public class SortingClass {
         }
         
         //Add these values to the convex hull
-        Point A = points.get(minPoint);
-        Point B = points.get(maxPoint);
+        Point2D.Double A = points.get(minPoint);
+        Point2D.Double B = points.get(maxPoint);
         convexHull.add(A);
         convexHull.add(B);
         middle.add(A);
@@ -37,12 +39,12 @@ public class SortingClass {
         points.remove(A);
         points.remove(B);
  
-        ArrayList<Point> leftSet = new ArrayList<>();
-        ArrayList<Point> rightSet = new ArrayList<>();
+        ArrayList<Point2D.Double> leftSet = new ArrayList<>();
+        ArrayList<Point2D.Double> rightSet = new ArrayList<>();
         
         //Populate the left and right subsets
         for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
+            Point2D.Double p = points.get(i);
             if (pointLocation(A, B, p) == -1)
                 leftSet.add(p);
             else if (pointLocation(A, B, p) == 1)
@@ -51,71 +53,71 @@ public class SortingClass {
         
         //Begin Recursive calls on subsets
         hullSet(A, B, rightSet, convexHull);
-        middle.add(new Point(-1,-1));
+        middle.add(new Point2D.Double(-1,-1));
         hullSet(B, A, leftSet, convexHull);
         
         return convexHull;
     }
     
-    public ArrayList<Point> getMiddle(){
+    public ArrayList<Point2D.Double> getMiddle(){
         return middle;
     }
     
-    public ArrayList<Point> getHull(){
+    public ArrayList<Point2D.Double> getHull(){
         return convexHull;
     }
  
-    public int distance(Point A, Point B, Point C) {
-        int ABx = B.x - A.x;
-        int ABy = B.y - A.y;
-        int num = ABx * (A.y - C.y) - ABy * (A.x - C.x);
+    public double distance(Point2D.Double A, Point2D.Double B, Point2D.Double C) {
+        double ABx = B.x - A.x;
+        double ABy = B.y - A.y;
+        double num = ABx * (A.y - C.y) - ABy * (A.x - C.x);
         if (num < 0)
             num = -num;
         
         return num;
     }
  
-    public void hullSet(Point A, Point B, ArrayList<Point> set,  ArrayList<Point> hull) {
+    public void hullSet(Point2D.Double A, Point2D.Double B, ArrayList<Point2D.Double> set,  ArrayList<Point2D.Double> hull) {
         int insertPosition = hull.indexOf(B);
         
         //base cases
         if (set.isEmpty())
             return;
         if (set.size() == 1) {
-            Point p = set.get(0);
+            Point2D.Double p = set.get(0);
             set.remove(p);
             hull.add(insertPosition, p);
             return;
         }
-        int dist = Integer.MIN_VALUE;
+        double dist = Integer.MIN_VALUE;
         int furthestPoint = -1;
         
         //find the furthest point from the line
         for (int i = 0; i < set.size(); i++) {
-            Point p = set.get(i);
-            int distance = distance(A, B, p);
+            Point2D.Double p = set.get(i);
+            double distance = distance(A, B, p);
             if (distance > dist) {
                 dist = distance;
                 furthestPoint = i;
             }
         }
-        Point P = set.get(furthestPoint);
+        Point2D.Double P = set.get(furthestPoint);
         set.remove(furthestPoint);
         middle.add(P);
         hull.add(insertPosition, P);
  
         // Determine who's to the left of AP
-        ArrayList<Point> leftSetAP = new ArrayList<>();
+        ArrayList<Point2D.Double> leftSetAP = new ArrayList<>();
         for (int i = 0; i < set.size(); i++) {
-            Point M = set.get(i);
+            Point2D.Double M = set.get(i);
             if (pointLocation(A, P, M) == 1) 
                 leftSetAP.add(M);
         }
  
         // Determine who's to the left of PB
-        ArrayList<Point> leftSetPB = new ArrayList<>();
+        ArrayList<Point2D.Double> leftSetPB = new ArrayList<>();
         for (int i = 0; i < set.size(); i++) {
-            Point M = set.get(i);
+            Point2D.Double M = set.get(i);
             if (pointLocation(P, B, M) == 1)
                 leftSetPB.add(M);
         }
@@ -125,8 +127,8 @@ public class SortingClass {
         hullSet(P, B, leftSetPB, hull);
     }
  
-    public int pointLocation(Point A, Point B, Point P) {
-        int cp1 = (B.x - A.x) * (P.y - A.y) - (B.y - A.y) * (P.x - A.x);
+    public int pointLocation(Point2D.Double A, Point2D.Double B, Point2D.Double P) {
+        double cp1 = (B.x - A.x) * (P.y - A.y) - (B.y - A.y) * (P.x - A.x);
         if (cp1 > 0)
             return 1;
         else if (cp1 == 0)

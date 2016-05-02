@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,15 +16,15 @@ import javax.swing.JComponent;
 
 public class coords2D extends JComponent {
 
-    ArrayList<Point> coords2 = new ArrayList<>();
-    ArrayList<Point> convexHull, middle;
+    ArrayList<Point2D.Double> coords2 = new ArrayList<>();
+    ArrayList<Point2D.Double> convexHull, middle;
     private final int graphSize, buffer = 20;
     private double frameX, frameY;
     private String coordinates = "";
     private final int point = 5;
 
     public coords2D(String file, int size, double frameXSize, double frameYSize) {
-        int xLoc, yLoc;
+        double xLoc, yLoc;
         graphSize = size + 1;
         frameX = frameXSize - buffer;
         frameY = frameYSize - 60 - buffer;
@@ -36,9 +37,9 @@ public class coords2D extends JComponent {
         }
 
         while (fileScanner.hasNext()) {
-            xLoc = fileScanner.nextInt();
-            yLoc = fileScanner.nextInt();
-            coords2.add(new Point(xLoc, yLoc));
+            xLoc = fileScanner.nextDouble();
+            yLoc = fileScanner.nextDouble();
+            coords2.add(new Point2D.Double(xLoc, yLoc));
             coordinates += "(" + xLoc + "," + yLoc + ") ";
         }
         SortingClass hull = new SortingClass();
@@ -56,7 +57,7 @@ public class coords2D extends JComponent {
         Ellipse2D graphPoints;
 
         for (int i = 0; i < coords2.size(); i++) {
-            Point temp = coords2.get(i);
+            Point2D.Double temp = coords2.get(i);
             double tempX = temp.getX();
             double tempY = temp.getY();
 
@@ -66,8 +67,8 @@ public class coords2D extends JComponent {
             g2.fill(graphPoints);
         }
 
-        Point start = convexHull.get(0);
-        Point temp = start;
+        Point2D.Double start = convexHull.get(0);
+        Point2D.Double temp = start;
         Line2D cHull;
         final double xMod = (frameX / graphSize), yMod = frameY / graphSize;
         final double pMod = 2 * point, lMod = point / 2;
@@ -75,8 +76,8 @@ public class coords2D extends JComponent {
        
 
         //draw line from largest to smallest x
-        Point mid1 = middle.get(0);
-        Point mid2 = middle.get(1);
+        Point2D.Double mid1 = middle.get(0);
+        Point2D.Double mid2 = middle.get(1);
         cHull = new Line2D.Double(
                 mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                 mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
@@ -84,14 +85,14 @@ public class coords2D extends JComponent {
         g2.setStroke(new BasicStroke(1));
         g2.draw(cHull);
 
-        Point tempP = middle.get(2);
+        Point2D.Double tempP = middle.get(2);
 
         //point inside lines
         for (int i = 2; i < middle.size(); i++) {
             mid1 = middle.get(0);
             mid2 = middle.get(1);
             
-            Point mid3 = middle.get(i);
+            Point2D.Double mid3 = middle.get(i);
             System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
             if (mid3.getX() != -1) {
@@ -154,7 +155,7 @@ public class coords2D extends JComponent {
         
         //draw outside Hull
          for (int i = 1; i < convexHull.size(); i++) {
-            Point temp2 = convexHull.get(i);
+            Point2D.Double temp2 = convexHull.get(i);
 
             cHull = new Line2D.Double(
                     temp.getX() * xMod + pMod + lMod, (-temp.getY() + graphSize) * yMod + lMod,
