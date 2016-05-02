@@ -102,6 +102,14 @@ public class coords2D extends JComponent {
                     else if(mid3.getX() > tempP.getX()){
                         mid1 = tempP;
                     }
+                    else{
+                        if(mid3.getY()< tempP.getY()){
+                            mid2=tempP;
+                        }
+                        else if (mid3.getY() > tempP.getY()){
+                            mid1=tempP;
+                        }
+                    }
                 }
                  System.out.println("Point 1: "+mid1+ "   Point 2: " +mid2+ "  Recursive point:  " +mid3);
                 
