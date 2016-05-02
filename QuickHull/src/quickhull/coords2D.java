@@ -92,18 +92,13 @@ public class coords2D extends JComponent {
             mid2 = middle.get(1);
             
             Point mid3 = middle.get(i);
-<<<<<<< HEAD
-            System.out.println("Point 1: "+mid1+ "   Point 2: " +mid2+ "  Recursive point:  " +mid3);
-=======
 
->>>>>>> fbc0a90d9d0faf5cd0e6a5cafdeac531783efab4
             if (mid3.getX() != -1) {
                 
                 if (temp != mid3) {
                     if (mid3.getX() < tempP.getX()) {
                         mid2 = tempP;
                     } 
-<<<<<<< HEAD
                     else if(mid3.getX() > tempP.getX()){
                         mid1 = tempP;
                     }
@@ -116,13 +111,7 @@ public class coords2D extends JComponent {
                         }
                     }
                 }
-                 System.out.println("Point 1: "+mid1+ "   Point 2: " +mid2+ "  Recursive point:  " +mid3);
-=======
-                    else {
-                        mid1 = tempP;
-                    }
-                }
->>>>>>> fbc0a90d9d0faf5cd0e6a5cafdeac531783efab4
+                
                 
                 //get slope of the lines
                 double slope = ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
@@ -139,20 +128,17 @@ public class coords2D extends JComponent {
                         mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
                         xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
                 g2.draw(cHull);
-<<<<<<< HEAD
 
                  cHull = new Line2D.Double(
                     mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                     mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
                  g2.draw(cHull);
-=======
                 
                 cHull = new Line2D.Double(
                 mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                 mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
                 g2.draw(cHull);
 
->>>>>>> fbc0a90d9d0faf5cd0e6a5cafdeac531783efab4
                 //draw from left point
                 cHull = new Line2D.Double(
                         mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
@@ -169,10 +155,6 @@ public class coords2D extends JComponent {
             }
             else{
                 tempP=middle.get(i+1);  
-<<<<<<< HEAD
-                System.out.println("Resetting temp");
-=======
->>>>>>> fbc0a90d9d0faf5cd0e6a5cafdeac531783efab4
             }
         }
          for (int i = 1; i < convexHull.size(); i++) {
