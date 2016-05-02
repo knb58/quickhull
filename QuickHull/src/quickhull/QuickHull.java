@@ -1,9 +1,7 @@
 package quickhull;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 /**
  *
@@ -71,7 +67,6 @@ public class QuickHull extends JFrame {
                 frame.add(coords);
                // frame.add(bonus, BorderLayout.SOUTH);
                 frame.setVisible(true);
-
             }
         }
 
@@ -87,9 +82,8 @@ public class QuickHull extends JFrame {
         fileLoc.add(size);
         fileLoc.add(sizeDefault);
         fileLoc.add(submitButton, BorderLayout.SOUTH);
-
-        //add to the frame
-        add(fileLoc);
+        
+        add(fileLoc); //add to the frame
     }
 
     public static void main(String[] args) {

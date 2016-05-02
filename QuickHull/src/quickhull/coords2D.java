@@ -30,7 +30,7 @@ public class coords2D extends JComponent {
 
         Scanner fileScanner = null;
         try {
-            fileScanner = new Scanner(new File("C:\\Users\\dell\\Documents\\test.txt"));
+            fileScanner = new Scanner(new File(file));
         } catch (FileNotFoundException ex) {
             System.exit(0);
         }
