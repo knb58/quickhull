@@ -51,6 +51,7 @@ public class SortingClass {
         
         //Begin Recursive calls on subsets
         hullSet(A, B, rightSet, convexHull);
+        middle.add(new Point(-1,-1));
         hullSet(B, A, leftSet, convexHull);
         
         return convexHull;
@@ -100,6 +101,7 @@ public class SortingClass {
         }
         Point P = set.get(furthestPoint);
         set.remove(furthestPoint);
+        middle.add(P);
         hull.add(insertPosition, P);
  
         // Determine who's to the left of AP
