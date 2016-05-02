@@ -42,6 +42,7 @@ public class coords2D extends JComponent {
             coords2.add(new Point2D.Double(xLoc, yLoc));
             coordinates += "(" + xLoc + "," + yLoc + ") ";
         }
+        System.out.println(coordinates);
         SortingClass hull = new SortingClass();
         convexHull = hull.quickHull(coords2);
         middle = hull.getMiddle();
@@ -96,32 +97,28 @@ public class coords2D extends JComponent {
             System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
             if (mid3.getX() != -1) {
+                System.out.println("Drawing");
                 
                 if (tempP != mid3) {
-                    System.out.println("Temp and the 3rd point are different.");
-                    if (mid3.getX() < tempP.getX()) {
-                        System.out.println("Making temp the 2nd point.");
+                    if (mid3.getX() < tempP.getX()) 
                         mid2 = tempP;
-                    } 
-                    else if(mid3.getX() > tempP.getX()){
-                        System.out.println("Making temp the 1st point.");
+                    else if(mid3.getX() > tempP.getX())
                         mid1 = tempP;
-                    }
-                    System.out.println("Couldn't figure it out.");
                 }
-                System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
+                 System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
-                
+                double slope,  perpendic;
                 //get slope of the lines
-                double slope = ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
+                slope = (mid2.getX() - mid1.getX()==0) ? 0 : ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
+                perpendic=((slope==0) ? 0 : 1/slope);
                 //find the y intercept of the left point
                 double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
                 //find the y intercept of the intersecting point
-                double PyIntercept = mid3.getY() - (mid3.getX() * (-1/slope));
+                double PyIntercept = mid3.getY() - (mid3.getX() * (-perpendic));
                 //derive the x and y values
-                double xVal = (PyIntercept - mid1yIntercept) / (slope+1/slope);
+                double xVal = ((slope+perpendic==0) ? mid3.getX(): ((PyIntercept - mid1yIntercept) / (slope+perpendic)));
                 double yVal = (slope * xVal) + mid1yIntercept;
-               
+                System.out.println("XVAL= "+xVal+ "   YVAL=  "+ yVal);
                 //draw perpendicular line
                 cHull = new Line2D.Double(
                         mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
