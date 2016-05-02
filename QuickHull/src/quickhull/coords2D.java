@@ -129,21 +129,21 @@ public class coords2D extends JComponent {
                     mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                     mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
                  g2.draw(cHull);
-                
-                //draw from left point
-                cHull = new Line2D.Double(
-                        mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
-                g2.draw(cHull);
 
-                //draw from right point
-                cHull = new Line2D.Double(
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
-                        mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-                g2.draw(cHull);
+                    //draw from left point
+                    cHull = new Line2D.Double(
+                            mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
+                    g2.draw(cHull);
 
-                tempP = mid3;
-            }
+                    //draw from right point
+                    cHull = new Line2D.Double(
+                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                            mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                    g2.draw(cHull);
+
+                    tempP = mid3;
+                }
             else{
                 tempP=middle.get(i+1);  
                 System.out.println("Resetting tempP");
