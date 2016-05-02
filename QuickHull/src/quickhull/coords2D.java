@@ -115,37 +115,40 @@ public class coords2D extends JComponent {
                 //get slope of the lines
                 double slope = ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
                 //find the y intercept of the left point
-                double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
-                //find the y intercept of the intersecting point
-                double PyIntercept = mid3.getY() - (mid3.getX() * (-1/slope));
-                //derive the x and y values
-                double xVal = (PyIntercept - mid1yIntercept) / (slope+1/slope);
-                double yVal = (slope * xVal) + mid1yIntercept;
-               
-                //draw perpendicular line
-                cHull = new Line2D.Double(
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
-                        xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
-                g2.draw(cHull);
+                if (slope != 0){
+                    double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
+                    //find the y intercept of the intersecting point
+                    double PyIntercept = mid3.getY() - (mid3.getX() * (-1/slope));
+                    //derive the x and y values
+                    double xVal = (PyIntercept - mid1yIntercept) / (slope+1/slope);
+                    double yVal = (slope * xVal) + mid1yIntercept;
 
-                 cHull = new Line2D.Double(
-                    mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                    mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-                 g2.draw(cHull);
-                
-                //draw from left point
-                cHull = new Line2D.Double(
+
+                    //draw perpendicular line
+                    cHull = new Line2D.Double(
+                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                            xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
+                    g2.draw(cHull);
+
+                     cHull = new Line2D.Double(
                         mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
-                g2.draw(cHull);
-
-                //draw from right point
-                cHull = new Line2D.Double(
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
                         mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-                g2.draw(cHull);
+                     g2.draw(cHull);
 
-                tempP = mid3;
+                    //draw from left point
+                    cHull = new Line2D.Double(
+                            mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
+                    g2.draw(cHull);
+
+                    //draw from right point
+                    cHull = new Line2D.Double(
+                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                            mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                    g2.draw(cHull);
+
+                    tempP = mid3;
+                }
             }
             else{
                 tempP=middle.get(i+1);  
