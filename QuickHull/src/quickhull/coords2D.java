@@ -41,7 +41,7 @@ public class coords2D extends JComponent {
             coords2.add(new Point2D.Double(xLoc, yLoc));
             coordinates += "(" + xLoc + "," + yLoc + ") ";
         }
-        System.out.println(coordinates);
+       // System.out.println(coordinates);
         SortingClass hull = new SortingClass();
         convexHull = hull.quickHull(coords2);
         middle = hull.getMiddle();
@@ -86,17 +86,17 @@ public class coords2D extends JComponent {
         g2.draw(cHull);
 
         Point2D.Double tempP = middle.get(2);
-
+        System.out.println(middle+ "\n");
         //point inside lines
         for (int i = 2; i < middle.size(); i++) {
             mid1 = middle.get(0);
             mid2 = middle.get(1);
             
             Point2D.Double mid3 = middle.get(i);
-            System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
+           // System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
-            if (mid3.getX() != -1) {
-                System.out.println("Drawing");
+            if (mid3.getX() >0) {
+               // System.out.println("Drawing");
                 
                 if (tempP != mid3) {
                     if (mid3.getX() < tempP.getX()) 
@@ -104,7 +104,7 @@ public class coords2D extends JComponent {
                     else if(mid3.getX() > tempP.getX())
                         mid1 = tempP;
                 }
-                 System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
+              //  System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
                 double slope,  perpendic;
                 //get slope of the lines
@@ -117,8 +117,8 @@ public class coords2D extends JComponent {
                 //derive the x and y values
                 double xVal = ((slope+perpendic==0) ? mid3.getX(): ((PyIntercept - mid1yIntercept) / (slope+perpendic)));
                 double yVal = (slope * xVal) + mid1yIntercept;
-                System.out.println("XVAL= "+xVal+ "   YVAL=  "+ yVal);
-               
+               // System.out.println("XVAL= "+xVal+ "   YVAL=  "+ yVal);
+               if (slope!=0){
                 //draw perpendicular line
                 cHull = new Line2D.Double(
                         mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
@@ -126,30 +126,33 @@ public class coords2D extends JComponent {
                 g2.setColor(Color.LIGHT_GRAY);
                 g2.draw(cHull);
 
-                g2.setColor(Color.DARK_GRAY);
-                 cHull = new Line2D.Double(
-                    mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                    mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-                 g2.draw(cHull);
+//                g2.setColor(Color.DARK_GRAY);
+//                 cHull = new Line2D.Double(
+//                    mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
+//                    mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+//                 g2.draw(cHull);
 
                     //draw from left point
                     cHull = new Line2D.Double(
                             mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                             mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
+                    g2.setColor(Color.RED);
                     g2.draw(cHull);
 
                     //draw from right point
                     cHull = new Line2D.Double(
                             mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
                             mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                    g2.setColor(Color.MAGENTA);
                     g2.draw(cHull);
 
                     tempP = mid3;
                 }
-            else{
+            else if(mid3.getX() == -1){
                 tempP=middle.get(i+1);  
-                System.out.println("Resetting tempP");
+             //   System.out.println("Resetting tempP");
             }
+        }
         }
         
         //draw outside Hull
