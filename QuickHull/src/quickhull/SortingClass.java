@@ -8,6 +8,7 @@ public class SortingClass {
     
      ArrayList<Point2D.Double> middle = new ArrayList<>();
      ArrayList<Point2D.Double> convexHull = new ArrayList<>();
+     ArrayList<Point2D.Double> midPoints= new ArrayList<>();
     
     public ArrayList<Point2D.Double> quickHull(ArrayList<Point2D.Double> points) {
         
@@ -53,9 +54,9 @@ public class SortingClass {
         
         //Begin Recursive calls on subsets
         hullSet(A, B, rightSet, convexHull);
-        middle.add(new Point2D.Double(-1,-1));
+        midPoints.add(new Point2D.Double(-1,-1));
         hullSet(B, A, leftSet, convexHull);
-        
+        midPoints.add(new Point2D.Double(-2,-2));        
         return convexHull;
     }
     
@@ -65,6 +66,9 @@ public class SortingClass {
     
     public ArrayList<Point2D.Double> getHull(){
         return convexHull;
+    }
+    public ArrayList<Point2D.Double> getPoints(){
+        return midPoints;
     }
  
     public double distance(Point2D.Double A, Point2D.Double B, Point2D.Double C) {
@@ -103,7 +107,6 @@ public class SortingClass {
         }
         Point2D.Double P = set.get(furthestPoint);
         set.remove(furthestPoint);
-        middle.add(P);
         hull.add(insertPosition, P);
  
         // Determine who's to the left of AP
@@ -123,6 +126,7 @@ public class SortingClass {
         }
         
         //recursive call
+        midPoints.add(P); 
         hullSet(A, P, leftSetAP, hull);
         hullSet(P, B, leftSetPB, hull);
     }

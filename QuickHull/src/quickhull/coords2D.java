@@ -16,7 +16,7 @@ import javax.swing.JComponent;
 public class coords2D extends JComponent {
 
     ArrayList<Point2D.Double> coords2 = new ArrayList<>();
-    ArrayList<Point2D.Double> convexHull, middle;
+    ArrayList<Point2D.Double> convexHull, middle, points;
     private final int graphSize, buffer = 20;
     private double frameX, frameY;
     private String coordinates = "";
@@ -45,6 +45,7 @@ public class coords2D extends JComponent {
         SortingClass hull = new SortingClass();
         convexHull = hull.quickHull(coords2);
         middle = hull.getMiddle();
+        points=hull.getPoints();
     }
 
     public String getCoordinates() {
@@ -56,6 +57,7 @@ public class coords2D extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
         Ellipse2D graphPoints;
 
+        //Drawing the points
         for (int i = 0; i < coords2.size(); i++) {
             Point2D.Double temp = coords2.get(i);
             double tempX = temp.getX();
@@ -73,87 +75,110 @@ public class coords2D extends JComponent {
         final double xMod = (frameX / graphSize), yMod = frameY / graphSize;
         final double pMod = 2 * point, lMod = point / 2;
 
-       
-
         //draw line from largest to smallest x
-        Point2D.Double mid1 = middle.get(0);
-        Point2D.Double mid2 = middle.get(1);
+        Point2D.Double minX = middle.get(0);
+        Point2D.Double maxX = middle.get(1);
+        
         cHull = new Line2D.Double(
-                mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                minX.getX() * xMod + pMod + lMod, (-minX.getY() + graphSize) * yMod + lMod,
+                maxX.getX() * xMod + pMod + lMod, (-maxX.getY() + graphSize) * yMod + lMod);
         g2.setColor(Color.DARK_GRAY);
         g2.setStroke(new BasicStroke(1));
         g2.draw(cHull);
 
-        Point2D.Double tempP = middle.get(2);
-        System.out.println(middle+ "\n");
+        //System.out.println(middle+ "\n");
+        int counter=0;
+        Point2D.Double tempP=points.get(0);
+        Point2D.Double midPoint;
+        
         //point inside lines
-        for (int i = 2; i < middle.size(); i++) {
-            mid1 = middle.get(0);
-            mid2 = middle.get(1);
+        while(points.size() > 1){
             
-            Point2D.Double mid3 = middle.get(i);
+            minX = middle.get(0);
+            maxX = middle.get(1);
+            System.out.println(points);
+            midPoint = points.get(counter);
+            
            // System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
-            if (mid3.getX() >0) {
+            if (midPoint.getX() >= 0) {
                // System.out.println("Drawing");
+                            System.out.println(points);                                                                                        //C:\\Users\\dell\\Documents\\test.txt
+
+                    for(int a=0; a<counter; a++){
+                        Point2D.Double tempVal= points.get(a);
+                        if(points.get(a)!=midPoint){
+                            if(tempVal.getX()<maxX.getX() && tempVal.getX()>midPoint.getX()){
+                                maxX=tempVal;
+                            }
+                            else if (tempVal.getX()>minX.getX() && tempVal.getX()<midPoint.getX()){
+                                minX=tempVal;
+                             }
+                        }
+                    }
                 
-                if (tempP != mid3) {
-                    if (mid3.getX() < tempP.getX()) 
-                        mid2 = tempP;
-                    else if(mid3.getX() > tempP.getX())
-                        mid1 = tempP;
-                }
               //  System.out.println("Point 1: "+ mid1+"  Point 2: "+mid2+ "   Recurisve Point: "+mid3+ " Temp val: "+ tempP);
 
                 double slope,  perpendic;
                 //get slope of the lines
-                slope = (mid2.getX() - mid1.getX()==0) ? 0 : ((mid2.getY() - mid1.getY()) / (mid2.getX() - mid1.getX()));
+                slope = (maxX.getX() - minX.getX()==0) ? 0 : ((maxX.getY() - minX.getY()) / (maxX.getX() - minX.getX()));
                 perpendic=((slope==0) ? 0 : 1/slope);
                 //find the y intercept of the left point
-                double mid1yIntercept = mid1.getY() - (mid1.getX() * slope);
+                double mid1yIntercept = minX.getY() - (minX.getX() * slope);
                 //find the y intercept of the intersecting point
-                double PyIntercept = mid3.getY() - (mid3.getX() * (-perpendic));
+                double PyIntercept = midPoint.getY() - (midPoint.getX() * (-perpendic));
                 //derive the x and y values
-                double xVal = ((slope+perpendic==0) ? mid3.getX(): ((PyIntercept - mid1yIntercept) / (slope+perpendic)));
+                double xVal = ((slope+perpendic==0) ? midPoint.getX(): ((PyIntercept - mid1yIntercept) / (slope+perpendic)));
                 double yVal = (slope * xVal) + mid1yIntercept;
                // System.out.println("XVAL= "+xVal+ "   YVAL=  "+ yVal);
-               if (slope!=0){
+              
                 //draw perpendicular line
                 cHull = new Line2D.Double(
-                        mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
+                        midPoint.getX() * xMod + pMod + lMod, (-midPoint.getY() + graphSize) * yMod + lMod,
                         xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
                 g2.setColor(Color.LIGHT_GRAY);
                 g2.draw(cHull);
 
-//                g2.setColor(Color.DARK_GRAY);
-//                 cHull = new Line2D.Double(
-//                    mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-//                    mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
-//                 g2.draw(cHull);
+                g2.setColor(Color.DARK_GRAY);
+                 cHull = new Line2D.Double(
+                    minX.getX() * xMod + pMod + lMod, (-minX.getY() + graphSize) * yMod + lMod,
+                    maxX.getX() * xMod + pMod + lMod, (-maxX.getY() + graphSize) * yMod + lMod);
+                 g2.draw(cHull);
 
                     //draw from left point
                     cHull = new Line2D.Double(
-                            mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
-                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod);
+                            minX.getX() * xMod + pMod + lMod, (-minX.getY() + graphSize) * yMod + lMod,
+                            midPoint.getX() * xMod + pMod + lMod, (-midPoint.getY() + graphSize) * yMod + lMod);
                     g2.setColor(Color.RED);
                     g2.draw(cHull);
 
                     //draw from right point
                     cHull = new Line2D.Double(
-                            mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
-                            mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
+                            midPoint.getX() * xMod + pMod + lMod, (-midPoint.getY() + graphSize) * yMod + lMod,
+                            maxX.getX() * xMod + pMod + lMod, (-maxX.getY() + graphSize) * yMod + lMod);
                     g2.setColor(Color.MAGENTA);
                     g2.draw(cHull);
 
-                    tempP = mid3;
+                   tempP = midPoint;
+                   counter++;
                 }
-            else if(mid3.getX() == -1){
-                tempP=middle.get(i+1);  
-             //   System.out.println("Resetting tempP");
+            else if(midPoint.getX() == -1){
+                
+                for (int j=0; j<counter+1; j++){
+                    points.remove(0);
+                }
+                counter=0;
+                tempP=points.get(0);
+                
+               System.out.println("Resetting tempP");
             }
+            else if(midPoint.getX() == -2){
+                    points.clear();
+            }
+                
         }
-        }
+
+        
         
         //draw outside Hull
          for (int i = 1; i < convexHull.size(); i++) {
