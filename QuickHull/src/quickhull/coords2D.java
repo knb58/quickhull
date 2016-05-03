@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -119,12 +118,15 @@ public class coords2D extends JComponent {
                 double xVal = ((slope+perpendic==0) ? mid3.getX(): ((PyIntercept - mid1yIntercept) / (slope+perpendic)));
                 double yVal = (slope * xVal) + mid1yIntercept;
                 System.out.println("XVAL= "+xVal+ "   YVAL=  "+ yVal);
+               
                 //draw perpendicular line
                 cHull = new Line2D.Double(
                         mid3.getX() * xMod + pMod + lMod, (-mid3.getY() + graphSize) * yMod + lMod,
                         xVal * xMod + pMod + lMod, (-yVal + graphSize) * yMod + lMod);
+                g2.setColor(Color.LIGHT_GRAY);
                 g2.draw(cHull);
 
+                g2.setColor(Color.DARK_GRAY);
                  cHull = new Line2D.Double(
                     mid1.getX() * xMod + pMod + lMod, (-mid1.getY() + graphSize) * yMod + lMod,
                     mid2.getX() * xMod + pMod + lMod, (-mid2.getY() + graphSize) * yMod + lMod);
