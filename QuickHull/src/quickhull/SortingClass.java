@@ -1,14 +1,14 @@
 package quickhull;
 
-
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class SortingClass {
     
-     ArrayList<Point2D.Double> middle = new ArrayList<>();
-     ArrayList<Point2D.Double> convexHull = new ArrayList<>();
-     ArrayList<Point2D.Double> midPoints= new ArrayList<>();
+    ArrayList<Point2D.Double> middle = new ArrayList<>(), convexHull = new ArrayList<>(), midPoints= new ArrayList<>();
+    public ArrayList<Point2D.Double> getMiddle(){  return middle; }
+    public ArrayList<Point2D.Double> getHull(){return convexHull; }
+    public ArrayList<Point2D.Double> getPoints(){ return midPoints; }
     
     public ArrayList<Point2D.Double> quickHull(ArrayList<Point2D.Double> points) {
         
@@ -31,8 +31,7 @@ public class SortingClass {
         }
         
         //Add these values to the convex hull
-        Point2D.Double A = points.get(minPoint);
-        Point2D.Double B = points.get(maxPoint);
+        Point2D.Double A = points.get(minPoint),  B = points.get(maxPoint);
         convexHull.add(A);
         convexHull.add(B);
         middle.add(A);
@@ -40,8 +39,7 @@ public class SortingClass {
         points.remove(A);
         points.remove(B);
  
-        ArrayList<Point2D.Double> leftSet = new ArrayList<>();
-        ArrayList<Point2D.Double> rightSet = new ArrayList<>();
+        ArrayList<Point2D.Double> leftSet = new ArrayList<>(), rightSet = new ArrayList<>();
         
         //Populate the left and right subsets
         for (int i = 0; i < points.size(); i++) {
@@ -59,22 +57,9 @@ public class SortingClass {
         midPoints.add(new Point2D.Double(-2,-2));        
         return convexHull;
     }
-    
-    public ArrayList<Point2D.Double> getMiddle(){
-        return middle;
-    }
-    
-    public ArrayList<Point2D.Double> getHull(){
-        return convexHull;
-    }
-    public ArrayList<Point2D.Double> getPoints(){
-        return midPoints;
-    }
  
     public double distance(Point2D.Double A, Point2D.Double B, Point2D.Double C) {
-        double ABx = B.x - A.x;
-        double ABy = B.y - A.y;
-        double num = ABx * (A.y - C.y) - ABy * (A.x - C.x);
+        double ABx = B.x - A.x,  ABy = B.y - A.y,  num = ABx * (A.y - C.y) - ABy * (A.x - C.x);
         if (num < 0)
             num = -num;
         
@@ -125,7 +110,6 @@ public class SortingClass {
                 leftSetPB.add(M);
         }
         
-        //recursive call
         midPoints.add(P); 
         hullSet(A, P, leftSetAP, hull);
         hullSet(P, B, leftSetPB, hull);

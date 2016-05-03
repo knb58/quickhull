@@ -60,9 +60,8 @@ public class QuickHull extends JFrame {
                 frame.setResizable(false);
 
                 coords2D coords = new coords2D(file, graph, FRAME_WIDTH, FRAME_HEIGHT);
-                String userCoords = coords.getCoordinates();
 
-               bonusPanel bonus= new bonusPanel(userCoords, FRAME_HEIGHT);
+           //    bonusPanel bonus= new bonusPanel(userCoords, FRAME_HEIGHT);
 
                 frame.add(coords);
                // frame.add(bonus, BorderLayout.SOUTH);
