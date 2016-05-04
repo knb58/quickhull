@@ -16,10 +16,10 @@ import javax.swing.JComponent;
 public class coords2D extends JComponent {
 
     ArrayList<Point2D.Double> coords2 = new ArrayList<>(), convexHull, middle, points;
-    private final int graphSize, buffer = 20, point = 5;
-    private double frameX, frameY;
+    private final int buffer = 20, point = 5;
+    private double graphSize, frameX, frameY;
 
-    public coords2D(String file, int size, double frameXSize, double frameYSize) {
+    public coords2D(String file, double size, double frameXSize, double frameYSize) {
         double xLoc, yLoc;
         graphSize = size + 1;
         frameX = frameXSize - buffer;   

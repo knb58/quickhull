@@ -46,7 +46,7 @@ public class QuickHull extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 String file = fileField.getText();
-                int graph = Integer.parseInt(size.getText());
+                double graph = Double.parseDouble(size.getText());
                 dispose(); //gets rid of the open file location gui  
 
                 //Create a frame to show the user
